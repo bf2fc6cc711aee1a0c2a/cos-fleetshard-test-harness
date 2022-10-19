@@ -6,6 +6,9 @@ COPY pom.xml pom.xml
 COPY src src
 
 # pre-download dependencies, excluding unneeded plugins
-RUN  mvn dependency:resolve dependency:resolve-plugins -DexcludeArtifactIds=maven-site-plugin,maven-install-plugin,maven-deploy-plugin
+RUN  mvn dependency:resolve dependency:resolve-plugins -DexcludeArtifactIds=maven-site-plugin,maven-install-plugin,maven-deploy-plugin,maven-dependency-plugin && \
+    rm -rf ~/.m2/repository/org/apache/commons/commons-text/1.3
+
+
 
 ENTRYPOINT [ "mvn", "verify", "-ntp", "-fn"]
